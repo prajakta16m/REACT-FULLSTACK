@@ -1,20 +1,18 @@
 
 import './App.css';
-import axios from 'axios';
-import { useEffect } from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Home from './pages/Home';
+
 
 function App() {
 
-  useEffect(() => {
-    // make the get request
-    axios.get("http://localhost:3001/posts").then((resp) => {
-      console.log(resp);
-    });
-  }, []);
-  
   return (
     <div className="App">
-     
+        <Router>
+          <Routes>
+            <Route path='/' exact Component={Home}></Route>
+          </Routes>
+        </Router>
     </div>
   );
 }
