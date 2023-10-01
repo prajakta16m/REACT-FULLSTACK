@@ -1,7 +1,9 @@
 const express = require('express');
+const cors = require('cors');   // whitelist same origin 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const db = require('./models');
 
