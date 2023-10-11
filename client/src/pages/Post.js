@@ -45,7 +45,7 @@ function Post() {
         </div>
         <div className='rightSide'>
             <div className='addCommentContainer'>
-                <input type='text' placeholder='Comment...' autoComplete='off'
+                <input type='text' placeholder='Comment...' value={newComment} autoComplete='off'
                  onChange={(event) => {
                     console.log(event.target.value);
                     setNewComment(event.target.value);}} />
