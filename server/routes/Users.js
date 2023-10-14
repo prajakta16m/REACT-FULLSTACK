@@ -1,46 +1,31 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { Users } = require('../models');
-const bcrypt = require('bcrypt');
+const { Users } = require("../models");
+const bcrypt = require("bcrypt");
 
-router.get('/', async (req, res) => {
-    const users = await Users.findAll();
-    res.send(users);
+router.post("/", async (req, res) => {
+  const { username, password } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+    Users.create({
+      username: username,
+      password: hash,
+    });
+    res.json("SUCCESS");
+  });
 });
 
-/** Create Post data in table */
-router.post('/', async (req, res) => {
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-    const {username, password} = req.body;
-    bcrypt.hash(password, 10).then(hash => {
+  const user = await Users.findOne({ where: { username: username } });
 
-        const obj = Users.create({
-            username,
-            password: hash
-        });
-        res.json('SUCCESS');
-    });
-    
-    
-});
+  if (!user) res.json({ error: "User Doesn't Exist" });
 
-// login route
-router.post('/login', async (req, res) => {
+  bcrypt.compare(password, user.password).then((match) => {
+    if (!match) res.json({ error: "Wrong Username And Password Combination" });
 
-    const {username, password} = req.body;
-    const user = await Users.findOne({where: {username: username}});
-
-    if(!user){
-        res.json({error: 'User does not exist.'});
-    }
-
-    // check password!
-    bcrypt.compare(password, user.password).then((match) => {
-        if(!match) res.json("Wrong username and password combination.");
-        // match found. write the code login.
-        res.json("You logged in!");
-    });
-
+    res.json("YOU LOGGED IN!!!");
+  });
 });
 
 module.exports = router;
