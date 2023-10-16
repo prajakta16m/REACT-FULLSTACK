@@ -7,7 +7,9 @@ function Login() {
     const [password, setPassword] = useState("");
 
     const login = () => {
-        axios.post("http://localhost:3001/auth/login", {username: username, password: password}).then(
+        const data =  {username: username, password: password};
+        console.log(data);
+        axios.post("http://localhost:3001/auth/login",data).then(
             (res) => {
                 console.log(res);
             }
@@ -15,7 +17,7 @@ function Login() {
     };
 
   return (
-    <div>
+    <div className="loginContainer">
         <input type="text" onChange={(event) => setUsername(event.target.value)}></input>
         <input type="password" onChange={(event) => setPassword(event.target.value)}></input>
 
