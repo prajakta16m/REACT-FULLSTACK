@@ -24,12 +24,31 @@ function Post() {
     }, []);
 
     const addComment = () => {
-        axios.post(`http://localhost:3001/comments/`, {commentBody: newComment, PostId: id}).then((resp) => {
-            
-            const comm = { commentBody: newComment};
-            setComments([...comments, comm]);
+        axios.post(
+            "http://localhost:3001/comments/", 
+            {
+                commentBody: newComment,
+                PostId: id,
+            },
+            {
+                headers: {
+                    accessToken: sessionStorage.getItem("accessToken"),
+                  },
+            },
+           
+             ).then((resp) => {
 
-            setNewComment('');
+                if(resp.data.error) {
+                    alert("error");
+                }
+                else {
+                    const comm = { commentBody: newComment};
+                    setComments([...comments, comm]);
+
+                    setNewComment('');
+                }
+            
+            
         });
     };
 
