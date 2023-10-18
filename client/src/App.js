@@ -7,11 +7,31 @@ import Post from './pages/Post';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import { AuthContext } from './helpers/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
 
   const [ authState, setAuthState ] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/auth/auth",
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken")
+        }
+      }
+    ).then(res => {
+
+    if(res.data.error) {
+      setAuthState(false);
+    } else {
+      setAuthState(true);
+    }
+      
+    });
+  
+  },[]);
 
   return (
     <div className="App">

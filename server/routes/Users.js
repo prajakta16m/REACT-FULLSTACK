@@ -15,6 +15,8 @@ router.post("/", async (req, res) => {
   });
 });
 
+const {validateToken} = require("../middlewares/AuthMiddleware");
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -30,6 +32,10 @@ router.post("/login", async (req, res) => {
 
     res.json(accesstoken);
   });
+});
+
+router.get("/auth", validateToken, (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
