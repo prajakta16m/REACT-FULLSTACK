@@ -11,7 +11,7 @@ const validateToken = (req, res, next) => {
     // check access token validaity
     try {
         const validToken = verify(accesstoken, "importantsecret");
-
+        req.user = validToken;
         if(validToken) {
             // move forward with request
             return next();

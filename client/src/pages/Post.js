@@ -28,7 +28,7 @@ function Post() {
             "http://localhost:3001/comments/", 
             {
                 commentBody: newComment,
-                PostId: id,
+                PostId: id
             },
             {
                 headers: {
@@ -42,7 +42,7 @@ function Post() {
                     alert("error");
                 }
                 else {
-                    const comm = { commentBody: newComment};
+                    const comm = { commentBody: newComment, username: resp.data.username};
                     setComments([...comments, comm]);
 
                     setNewComment('');
@@ -74,6 +74,7 @@ function Post() {
                 {comments.map((comment, key) => {
                     return <div className='comment'>
                         {comment.commentBody}
+                        <label>Username: {comment.username}</label>
                     </div>;
                 })}
             </div>

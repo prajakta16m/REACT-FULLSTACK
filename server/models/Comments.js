@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
         commentBody: {
             type: DataTypes.STRING,
             allowNull: true
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
 
