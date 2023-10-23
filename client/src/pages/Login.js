@@ -22,6 +22,7 @@ function Login() {
                 if(res.data.error) {
                     alert(res.data.error);
                 } else {
+                    console.log("accessToken", res.data);
                     localStorage.setItem("accessToken", res.data);
                     setAuthState({username: res.data.username, id: res.data.id, status: true});
                     navigate("/");
