@@ -1,27 +1,19 @@
 const { verify } = require("jsonwebtoken");
 
 const validateToken = (req, res, next) => {
+  const accessToken = req.header("accessToken");
 
-    const accesstoken = req.header("accessToken");
-    console.log("accesstoken", accesstoken);
+  if (!accessToken) return res.json({ error: "User not logged in!" });
 
-    if(!accesstoken) {
-        return res.json({error: "User not logged in!"});
+  try {
+    const validToken = verify(accessToken, "importantsecret");
+    req.user = validToken;
+    if (validToken) {
+      return next();
     }
-
-    // check access token validaity
-    try {
-        const validToken = verify(accesstoken, "importantsecret");
-        console.log("validToken", validToken);
-        req.user = validToken;
-        if(validToken) {
-            // move forward with request
-            return next();
-        }
-    } catch (err) {
-        console.log(err);
-        return res.json({error: "Invalid login"});
-    }
+  } catch (err) {
+    return res.json({ error: err });
+  }
 };
 
-module.exports = { validateToken};
+module.exports = { validateToken };

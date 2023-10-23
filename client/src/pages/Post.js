@@ -9,12 +9,13 @@ function Post() {
     let { id } = useParams();
 
     const { authState } = useContext(AuthContext);
+    console.log(authState);
 
     const [ postObj, setPostObj ] = useState({});
     const [ comments, setComments ] = useState([]);
     const [ newComment, setNewComment ] = useState([]);
     
-    useEffect(() => {
+    useEffect(() => {   
         axios.get(`http://localhost:3001/posts/byId/${id}`).then((resp) => {
            
             setPostObj(resp.data);
@@ -87,11 +88,12 @@ function Post() {
             </div>
             <div className='listOfComments'>
                 {comments.map((comment, key) => {
-                    return <div className='comment'>
+                    return <div key={key} className='comment'>
                         {comment.commentBody}
                         <label>Username: {comment.username}</label>
                         {
-                            authState.username === comment.username && <button onClick={ () => {deleteComment(comment.id)}}>X</button>
+                            authState.username === comment.username && 
+                            <button onClick={ () => {deleteComment(comment.id)}}>X</button>
                         }
                         
                     </div>;

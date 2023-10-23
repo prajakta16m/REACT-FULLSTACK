@@ -23,7 +23,7 @@ function Login() {
                     alert(res.data.error);
                 } else {
                     console.log("accessToken", res.data);
-                    localStorage.setItem("accessToken", res.data);
+                    localStorage.setItem("accessToken", res.data.token);
                     setAuthState({username: res.data.username, id: res.data.id, status: true});
                     navigate("/");
                 }

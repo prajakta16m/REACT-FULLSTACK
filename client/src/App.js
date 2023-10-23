@@ -15,19 +15,22 @@ function App() {
   const [ authState, setAuthState ] = useState({username: "", id: 0, status: false});
 
   useEffect(() => {
-    axios.get("http://localhost:3001/auth/auth",
-      {
-        headers: {
-          accessToken: localStorage.getItem("accessToken")
-        }
-      }
-    ).then(res => {
+    const token = localStorage.getItem("accessToken");
+    console.log("token", token);
 
-    if(res.data.error) {
-      setAuthState({...authState, status: false});
-    } else {
-      setAuthState({username: res.data.username, id: res.data.id, status: true});
-    }
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: token,
+        },
+      }).then(res => {
+        console.log("app.js res", res);
+        if(res.data.error) {
+          setAuthState({username: "", id: 0, status: false});
+        } else {
+          console.log("res.data", res.data);
+          setAuthState({username: res.data.username, id: res.data.id, status: true});
+        }
       
     });
   
