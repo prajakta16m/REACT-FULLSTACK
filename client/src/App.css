@@ -113,6 +113,13 @@ span {
   display: flex;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.navbar button {
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
 }
 
 .navbar a {

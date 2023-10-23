@@ -23,7 +23,7 @@ function Login() {
                     alert(res.data.error);
                 } else {
                     localStorage.setItem("accessToken", res.data);
-                    setAuthState(true);
+                    setAuthState({username: res.data.username, id: res.data.id, status: true});
                     navigate("/");
                 }
                 

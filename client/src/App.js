@@ -12,7 +12,7 @@ import axios from 'axios';
 
 function App() {
 
-  const [ authState, setAuthState ] = useState(false);
+  const [ authState, setAuthState ] = useState({username: "", id: 0, status: false});
 
   useEffect(() => {
     axios.get("http://localhost:3001/auth/auth",
@@ -24,14 +24,19 @@ function App() {
     ).then(res => {
 
     if(res.data.error) {
-      setAuthState(false);
+      setAuthState({...authState, status: false});
     } else {
-      setAuthState(true);
+      setAuthState({username: res.data.username, id: res.data.id, status: true});
     }
       
     });
   
   },[]);
+
+  const logout = () => {
+      localStorage.removeItem("accessToken");
+      setAuthState({username: "", id: 0, status: false});
+  }
 
   return (
     <div className="App">
@@ -41,15 +46,20 @@ function App() {
             <Link to="/createpost">Create a Post</Link>
             <Link to="/">Home Page</Link> 
             {
-              !authState && (
+              !authState.status ? (
                 <>
                 <Link to="/registration">Registration</Link>
                 <Link to="/login">Login</Link>
                 </>
+              ) : (
+                <>
+                  <button onClick={logout}>Logout</button>
+                </>
               )
             } 
-            
-          </div>  
+
+            <h1>{authState.username}</h1>
+         </div>  
           
           <Routes>
             <Route path='/' exact Component={Home}></Route>

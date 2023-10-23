@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
     // Generate jsonwebtoken or accesstoken
     const accesstoken = sign({username: user.username, id: user.id}, "importantsecret");
 
-    res.json(accesstoken);
+    res.json({token: accesstoken, username: user.username, id: user.id});
   });
 });
 
