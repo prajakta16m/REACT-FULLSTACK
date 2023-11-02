@@ -10,7 +10,7 @@ router.post("/", validateToken, async(req, res) => {
     const found = await Likes.findOne({where: {PostId: PostId, UserId: UserId}});
     if(!found){
         await Likes.create({PostId: PostId, UserId: UserId});
-        res.json("Success");
+        res.json({liked: true});
     } else {
         // unlike that post
         await Likes.destroy({
@@ -20,11 +20,13 @@ router.post("/", validateToken, async(req, res) => {
             }
         });
 
-        res.json("Unliked successfully.");
+        res.json({liked: false});
     }
     
 
     
 });
+
+
 
 module.exports = router;
