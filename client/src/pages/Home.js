@@ -2,17 +2,26 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 function Home() {
 
     const [ list, setList ] = useState([]);
+    const [ likedPosts, setLikedPosts ] = useState([]);
 
     let navigate = useNavigate();
 
   useEffect(() => {
     // make the get request
-    axios.get("http://localhost:3001/posts").then((resp) => {
-      setList(resp.data);
+    axios.get("http://localhost:3001/posts",
+    {
+      headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+    },
+    ).then((resp) => {
+      setList(resp.data.listOfPosts);
+      setLikedPosts(resp.data.likedPosts.map(like => {return like.PostId;}));
     });
   }, []);
 
@@ -51,7 +60,9 @@ function Home() {
             <div className='title'>{post.title}</div>
             <div className='body' onClick={() => navigate(`/post/${post.id}`)}>{post.postText}</div>
             <div className='footer'>{post.username}
-              <button onClick={() => {likePost(post.id)}}>Like</button>
+            <ThumbUpIcon onClick={() => {likePost(post.id)}}
+              className={ likedPosts.includes(post.id) ? 'unlikeBttn' : 'likeBttn' }
+            ></ThumbUpIcon>
               <label>{post.Likes.length}</label>
             </div>
           </div>
