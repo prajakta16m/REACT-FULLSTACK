@@ -11,7 +11,7 @@ function CreatePost() {
     let navigate = useNavigate();
 
     const { authState } = useContext(AuthContext);
-
+    
 
     const validationSchema = Yup.object().shape(
         {
@@ -37,10 +37,10 @@ function CreatePost() {
     };
 
     useEffect(() => {
-        if(!authState.status){
+              if(!authState.status){
             navigate("/login");
         }
-    }, []);
+           }, []);
 
   return (
     <div className='createPostPage'>
@@ -56,7 +56,7 @@ function CreatePost() {
 
                 <label>Username: </label>
                 <ErrorMessage name='username' component='span'></ErrorMessage>
-                <Field id="inputCreatePost" name="username" placeholder='Ex: username'></Field>
+                <Field id="inputCreatePost" name="username" value={authState.username} ></Field>
 
                 <button type="submit">Create Post</button>
             </Form>
