@@ -3,10 +3,14 @@ import { Formik , Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import { AuthContext } from '../helpers/AuthContext';
 
 function CreatePost() {
 
     let navigate = useNavigate();
+
+    const { authState } = useContext(AuthContext);
 
 
     const validationSchema = Yup.object().shape(
@@ -31,6 +35,12 @@ function CreatePost() {
             navigate('/');
         });
     };
+
+    useEffect(() => {
+        if(!authState.status){
+            navigate("/login");
+        }
+    }, []);
 
   return (
     <div className='createPostPage'>

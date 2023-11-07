@@ -1,6 +1,6 @@
 
 import './App.css';
-import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Link, useNavigate} from 'react-router-dom';
 import Home from './pages/Home';
 import CreatePost from './pages/CreatePost';
 import Post from './pages/Post';
@@ -14,6 +14,7 @@ import axios from 'axios';
 function App() {
 
   const [ authState, setAuthState ] = useState({username: "", id: 0, status: false});
+
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -40,15 +41,16 @@ function App() {
   const logout = () => {
       localStorage.removeItem("accessToken");
       setAuthState({username: "", id: 0, status: false});
+     
   }
 
   return (
+    
     <div className="App">
       <AuthContext.Provider value={{authState, setAuthState}}>
         <Router>
           <div className='navbar'>
-            <Link to="/createpost">Create a Post</Link>
-            <Link to="/">Home Page</Link> 
+            
             {
               !authState.status ? (
                 <>
@@ -56,7 +58,10 @@ function App() {
                 <Link to="/login">Login</Link>
                 </>
               ) : (
+                
                 <>
+                <Link to="/createpost">Create a Post</Link>
+                 <Link to="/">Home Page</Link> 
                   <button onClick={logout}>Logout</button>
                 </>
               )
