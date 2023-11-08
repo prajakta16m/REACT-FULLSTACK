@@ -77,6 +77,7 @@ function Home() {
             <div className='title'>{post.title}</div>
             <div className='body' onClick={() => navigate(`/post/${post.id}`)}>{post.postText}</div>
             <div className='footer'>{post.username}
+             
             <ThumbUpIcon onClick={() => {likePost(post.id)}}
               className={ likedPosts.includes(post.id) ? 'unlikeBttn' : 'likeBttn' }
             ></ThumbUpIcon>

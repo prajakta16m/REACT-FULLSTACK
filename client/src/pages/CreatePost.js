@@ -56,7 +56,7 @@ function CreatePost() {
 
                 <label>Username: </label>
                 <ErrorMessage name='username' component='span'></ErrorMessage>
-                <Field id="inputCreatePost" name="username" value={authState.username} ></Field>
+                <Field id="inputCreatePost" name="username" placeholder={authState.username} ></Field>
 
                 <button type="submit">Create Post</button>
             </Form>
