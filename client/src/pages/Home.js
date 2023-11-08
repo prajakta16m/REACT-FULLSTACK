@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { AuthContext } from '../helpers/AuthContext';
 
@@ -76,8 +76,9 @@ function Home() {
           return <div className='post' >
             <div className='title'>{post.title}</div>
             <div className='body' onClick={() => navigate(`/post/${post.id}`)}>{post.postText}</div>
-            <div className='footer'>{post.username}
-             
+            <div className='footer'>
+              <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+              
             <ThumbUpIcon onClick={() => {likePost(post.id)}}
               className={ likedPosts.includes(post.id) ? 'unlikeBttn' : 'likeBttn' }
             ></ThumbUpIcon>
