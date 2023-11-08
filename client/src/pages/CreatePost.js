@@ -29,6 +29,8 @@ function CreatePost() {
 
     const onSubmit = (data) => {
         console.log(data);
+        data.UserId = authState.id;
+        console.log(authState);
         // make api call to save post
         axios.post("http://localhost:3001/posts", data).then(response => {
             console.log('works');
